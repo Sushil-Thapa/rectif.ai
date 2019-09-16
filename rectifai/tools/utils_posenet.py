@@ -96,5 +96,7 @@ def draw_skeleton_and_keypoints(
             out_img, cv_keypoints, outImage=np.array([]), color=(0,0, 255),
             flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
     out_img = cv2.polylines(out_img, adjacent_keypoints, isClosed=False, color=(0, 0, 255))
+    if cv_keypoints:
+        import pdb; pdb.set_trace()
     #TODO cv_keypoints as numpy array
-    return out_img, cv_keypoints, status
+    return out_img, keypoint_coords, status

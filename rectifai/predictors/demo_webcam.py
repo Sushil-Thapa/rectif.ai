@@ -4,7 +4,7 @@ import time
 import argparse
 import subprocess
 
-from rectifai.models import posenet
+from rectifai.models import posenet, posturenet
 from rectifai.models.posenet.decode import *
 from rectifai.tools.utils_posenet import *
 
@@ -26,6 +26,7 @@ def main():
     print("Loading Posture Detection model..")
 
     #TODO load posture model
+    posturenet_model = posturenet.load_model().to(device)
 
     while True:
         input_image, display_image, output_scale = read_cap(cap)
@@ -43,20 +44,18 @@ def main():
 
         keypoint_coords *= output_scale
 
-        overlay_image, key_points, status = draw_skeleton_and_keypoints(
+        overlay_image, keypoint_coords, status = draw_skeleton_and_keypoints(
             display_image, pose_scores, keypoint_scores, keypoint_coords
             )
         
-        if key_points:
-            key_points = [list(key_point.pt) for key_point in key_points]
-        else:
+        if not keypoint_coords:
             continue
-        with torch.no_grad():
-            key_points = torch.Tensor(key_points).to(device)
-            key_points =  key_points.reshape(-1, key_points.shape[0]*key_points.shape[1])
-            # posture_status = posture_model(key_points)
-            # TODO 
-            posture_status = "bad"
+        else:
+            with torch.no_grad():
+                key_points_input = torch.Tensor(keypoint_coords).reshape(-1, 17*2).to(device)
+                output = posture_model(key_points_input)
+                 _, predicted = torch.max(outputs.data, 1)
+                posture_status = 'bad' if predicted == 0 else 'good'
 
         if not args.no_preview:
             cv2.imshow('posenet', overlay_image)

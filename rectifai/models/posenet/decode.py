@@ -113,7 +113,7 @@ def decode_multiple_poses(
     scores = scores.cpu().numpy()
     height = scores.shape[1]
     width = scores.shape[2]
-    # change dimensions from (x, h, w) to (x//2, h, w, 2) to allow return of complete coord array
+
     offsets = offsets.cpu().numpy().reshape(2, -1, height, width).transpose((1, 2, 3, 0))
     displacements_fwd = displacements_fwd.cpu().numpy().reshape(2, -1, height, width).transpose((1, 2, 3, 0))
     displacements_bwd = displacements_bwd.cpu().numpy().reshape(2, -1, height, width).transpose((1, 2, 3, 0))
@@ -140,10 +140,7 @@ def decode_multiple_poses(
         pose_score = get_instance_score_fast(
             pose_keypoint_coords[:pose_count, :, :], squared_nms_radius, keypoint_scores, keypoint_coords)
 
-        # NOTE this isn't in the original implementation, but it appears that by initially ordering by
-        # part scores, and having a max # of detections, we can end up populating the returned poses with
-        # lower scored poses than if we discard 'bad' ones and continue (higher pose scores can still come later).
-        # Set min_pose_score to 0. to revert to original behaviour
+
         if min_pose_score == 0. or pose_score >= min_pose_score:
             pose_scores[pose_count] = pose_score
             pose_keypoint_scores[pose_count, :] = keypoint_scores
