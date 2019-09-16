@@ -1,0 +1,11 @@
+import os
+import logging
+from dotenv import load_dotenv
+load_dotenv(verbose=True)
+
+logger = logging.getLogger(__name__)
+
+# The Root Directory of the project
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+POSENET_PATH = os.path.join(ROOT_DIR, 'data','raw','posenet.pth')
