@@ -19,7 +19,6 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/Sushil-Thapa/PyTorch-Hackathon-2019.git",
     packages=setuptools.find_packages(),
-    namespace_packages=["rectifai"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
