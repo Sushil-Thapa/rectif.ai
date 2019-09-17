@@ -4,8 +4,9 @@ Making the world a better place one posture at a time.
 
 ## Running the system
 
-- Create a virtual environment using the `requirements.txt` file
-- Download [models](https://drive.google.com/drive/folders/1bdGLkvHFLdwb1hIJ1dMQCjYTDbGsEemF?usp=sharing) 
+- Create a virtual environment 
+- Install dependencies using the `requirements.txt` file
+- Download [model files](https://drive.google.com/drive/folders/1bdGLkvHFLdwb1hIJ1dMQCjYTDbGsEemF?usp=sharing) to `data/raw/` folder.
 - Run `python -m rectifai.predictors.demo_webcam`
 
 ## Inspiration
@@ -31,3 +32,6 @@ We used a Pytorch implementation of PoseNet to detect key-points. The points are
 - Addition of feature to get analytics for posture over a period of time
 - Monitoring from different angles
 
+## Acknowledgements
+1. [AllenNLP](https://allennlp.org/)
+2. [Posenet](http://mi.eng.cam.ac.uk/projects/relocalisation/)-[Pytorch](https://github.com/rwightman/posenet-pytorch.)
