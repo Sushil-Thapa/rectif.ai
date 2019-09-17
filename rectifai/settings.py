@@ -10,3 +10,6 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 POSENET_PATH = os.path.join(ROOT_DIR, 'data','raw','posenet.pth')
 POSTURENET_PATH = os.path.join(ROOT_DIR, 'data','raw','posturenet.pth')
+
+import torch
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

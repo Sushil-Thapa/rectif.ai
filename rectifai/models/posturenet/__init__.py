@@ -1,8 +1,8 @@
 import torch
 import os
 from rectifai.settings import POSTURENET_PATH
-
 from .network import PostureNetwork
+
 
 def load_model():
     model = PostureNetwork()

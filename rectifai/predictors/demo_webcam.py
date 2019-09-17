@@ -6,7 +6,8 @@ import subprocess
 
 from rectifai.models import posenet, posturenet
 from rectifai.models.posenet.decode import *
-from rectifai.tools.utils_posenet import *
+from rectifai.tools.utils.posenet import *
+from rectifai.models.posturenet.config import input_size
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--no-preview',action='store_true')
@@ -25,9 +26,8 @@ def main():
 
     print("Loading Posture Detection model..")
 
-    #TODO load posture model
     posturenet_model = posturenet.load_model().to(device)
-
+    prev_heading = ""
     while True:
         input_image, display_image, output_scale = read_cap(cap)
 
@@ -48,14 +48,14 @@ def main():
             display_image, pose_scores, keypoint_scores, keypoint_coords
             )
         
-        if not keypoint_coords:
-            continue
-        else:
-            with torch.no_grad():
-                key_points_input = torch.Tensor(keypoint_coords).reshape(-1, 17*2).to(device)
-                output = posture_model(key_points_input)
-                 _, predicted = torch.max(outputs.data, 1)
-                posture_status = 'bad' if predicted == 0 else 'good'
+
+        with torch.no_grad():
+            key_points_input = torch.Tensor(keypoint_coords).reshape(-1, input_size).to(device)
+            output = posturenet_model(key_points_input)
+            _, predicted = torch.max(output.data, 1)
+
+            op = predicted.sum()//len(predicted)
+            posture_status = 'bad' if op.data.tolist() == 0 else 'good'
 
         if not args.no_preview:
             cv2.imshow('posenet', overlay_image)
@@ -69,9 +69,10 @@ def main():
         else:
             heading = 'Great!'
             msg = 'Your posture looks good..'
-
-        print(heading,msg)
-        subprocess.call(['notify-send',heading,msg,'--urgency=critical', '--expire-time=100'])
+        if not prev_heading == heading:
+            print(heading,msg)
+            subprocess.call(['notify-send',heading,msg,'--urgency=critical', '--expire-time=100'])
+            prev_heading = heading
 
 
 if __name__ == "__main__":

@@ -1,15 +1,10 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
-
-# Hyperparameters
-input_size = 17*2
-hidden_sizes = [256,256]
-n_classes = 2
+from .config import *
 
 class PostureNetwork(nn.Module):
-    def __init__(self):
+    def __init__(self, input_size=input_size, hidden_sizes=hidden_sizes, n_classes=n_classes):
         super(PostureNetwork, self).__init__()
         self.fc1 = nn.Linear(input_size, hidden_sizes[0]) 
         self.fc2 = nn.Linear(hidden_sizes[0], hidden_sizes[1])  
