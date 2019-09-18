@@ -2,11 +2,16 @@
 
 Making the world a better place one posture at a time. 
 
+## Background
+
+This repo is an outcome of our attempt in building  using Standford's Musculoskeletal Radiographs (MURA) dataset to detect abnormality
+
 ## Running the system
 
 - Create and activate a Virtual Environment (preferably Python 3.7)
 - Install dependencies using the `requirements.txt` file or with `setup.py` as `pip install -e .`
-- Download [model files](https://drive.google.com/drive/folders/1bdGLkvHFLdwb1hIJ1dMQCjYTDbGsEemF?usp=sharing) to `data/raw/` folder. *[If incase models doesn't get automatically downloaded]*
+- If you have `git-lfs` installed, models should be automatically downloaded. 
+  If it isn't (i.e the sizes aren't ~13MB:posenet and 296KB:posturenet), explicitly download the models from this [drive link](https://drive.google.com/drive/folders/1bdGLkvHFLdwb1hIJ1dMQCjYTDbGsEemF?usp=sharing) to `data/raw/` folder.
 - Run `python -m rectifai.predictors.demo_webcam` to see the demo with realtime pose preview.  
   or  
   Run `python -m rectifai.predictors.demo_webcam --no-preview` to see the notifications only when you need to. :)
@@ -42,15 +47,15 @@ Because of the unavailability of the posture(good/bad) dataset, We had to create
 
 ## Challenges we ran into
 
-- No proper posture detection dataset anywhere, Really expensive to create image based dataset for it. so we tried a different domain problem and hacked it to work for our use case. 
-- Infrastructure needed for best results. Didn't have good machines so used mobilenet for the posenet  and Linear neuron networks for detection because of its speed and accuracy compared to size of models and infrastructure required.
+- No proper posture detection dataset anywhere, Really expensive to create image based dataset for it. so we tried a different domain problem and hacked it to work for our use case. This way, We were able to propose novel approach/solution to solve a problem that not many actually baits an eye on.
+- Infrastructure needed for best results. Didn't have good machines so applied mobilenet for the posenet  and Linear Artificial Neuron Networks for detection because of its speed and accuracy compared to size of models and infrastructure required.
 
 ## What's next for Rectif.ai
 
 - Training on more data for more accurate results
 - Addition of feature to get analytics for posture over a period of time
 - Monitoring from different angles
-- Add temporal models for posture detection
+- Try out temporal models for posture detection
 
 ## Acknowledgements
 1. [AllenNLP](https://allennlp.org/)
