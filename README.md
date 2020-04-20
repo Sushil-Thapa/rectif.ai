@@ -4,7 +4,7 @@ Making the world a better place one posture at a time.
 
 ## Background
 
-This repo is an outcome of our attempt in building  using Standford's Musculoskeletal Radiographs (MURA) dataset to detect abnormality
+This repo is an outcome of our attempt in building a novel solution with a novel technique for a not so novel hackathon.
 
 ## Running the system
 
